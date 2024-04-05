@@ -25,10 +25,8 @@ import kotlinx.coroutines.delay
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val imageUrl = "https://media.tenor.com/jB5rZH5NdAoAAAAi/coraje-el-perro-cobarde-coraje.gif"
-        //installSplashScreen()
         setContent {
-            MyApp(imageUrl = imageUrl)
+            MyApp()
         }
 
     }
@@ -51,21 +49,9 @@ fun WelcomeText() {
 }
 
 @Composable
-fun MyApp(imageUrl: String) {
-    var showWelcomeScreen by remember { mutableStateOf(false) }
-
-    LaunchedEffect(Unit) {
-        delay(3000)
-        showWelcomeScreen = true
-    }
-
+fun MyApp() {
     Surface(modifier = Modifier.fillMaxSize()) {
-        if (!showWelcomeScreen) {
-            //SplashScreen(url = imageUrl)
-            SplashScreenLocal()
-        } else {
-            WelcomeText()
-        }
+        WelcomeText()
     }
 }
 
