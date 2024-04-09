@@ -45,7 +45,7 @@ fun SplashScreenLocal() {
         Image(
             painter = rememberAsyncImagePainter(
                 ImageRequest.Builder(LocalContext.current)
-                    .data(data = R.drawable.corajesplash) // ACA SE CAMBIA EL GIF
+                    .data(data = R.drawable.animacion) // ACA SE CAMBIA EL GIF
                     .build(),
                 imageLoader = imageLoader
             ),

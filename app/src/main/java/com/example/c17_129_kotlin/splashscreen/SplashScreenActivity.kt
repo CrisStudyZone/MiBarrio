@@ -14,7 +14,7 @@ import pl.droidsonroids.gif.GifImageView
 @SuppressLint("CustomSplashScreen")
 class SplashScreenActivity : AppCompatActivity() {
 
-    private val splashTimeOut: Long = 3000
+    private val splashTimeOut: Long = 5900
     @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,7 +29,7 @@ class SplashScreenActivity : AppCompatActivity() {
         supportActionBar?.hide()
 
         val gifImageView: GifImageView = findViewById(R.id.gifImageView)
-        gifImageView.setImageResource(R.drawable.corajesplash)
+        gifImageView.setImageResource(R.drawable.animacion)
 
         Handler().postDelayed({
             val intent = Intent(this, MainActivity::class.java)
