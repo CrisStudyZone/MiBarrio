@@ -66,7 +66,7 @@ fun CustomMenu(colorGradient1: Color, colorGradient2: Color, imageResId: Int, te
 
         ) {
         Button(
-            onClick = { },
+            onClick = { /*Agregar la navegacio*/ },
             modifier = Modifier
                 .fillMaxWidth(),
             colors = ButtonDefaults.buttonColors(Color.Transparent), // Color de botón transparente
