@@ -1,6 +1,5 @@
 package com.example.c17_129_kotlin.pharmacy
 
-import android.app.Activity
 import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
@@ -36,7 +35,6 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.c17_129_kotlin.R
-import com.example.c17_129_kotlin.data.Pharmacy
 
 
 @Composable
