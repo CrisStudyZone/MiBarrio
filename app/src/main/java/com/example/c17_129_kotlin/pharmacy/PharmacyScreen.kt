@@ -35,6 +35,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.c17_129_kotlin.R
+import com.example.c17_129_kotlin.pharmacy.data.PharmacyData
 
 
 @Composable
@@ -70,15 +71,15 @@ fun PharmacyScreen(){
                 modifier = Modifier.size(64.dp)
             )
         }
-        val pharmacyOpen = Pharmacy(pharmacyName = "Farmacia XYZ", pharmacyAddress = "Calle Principal 123", pharmacyPhone = "123-456-7890", open = true)
-        val pharmacyOpen1 = Pharmacy(pharmacyName = "Farmacia", pharmacyAddress = "Calle Principal 123", pharmacyPhone = "123-456-7890", open = true)
-        val pharmacyClose = Pharmacy(pharmacyName = "Farmacia hyr", pharmacyAddress = "Calle Principal 123", pharmacyPhone = "123-456-7890", open = false)
-        val pharmacyList = listOf(pharmacyClose,pharmacyOpen,pharmacyOpen1)
+        val pharmacyDataOpen = PharmacyData(pharmacyName = "Farmacia XYZ", pharmacyAddress = "Calle Principal 123", pharmacyPhone = "123-456-7890", open = true)
+        val pharmacyDataOpen1 = PharmacyData(pharmacyName = "Farmacia", pharmacyAddress = "Calle Principal 123", pharmacyPhone = "123-456-7890", open = true)
+        val pharmacyDataClose = PharmacyData(pharmacyName = "Farmacia hyr", pharmacyAddress = "Calle Principal 123", pharmacyPhone = "123-456-7890", open = false)
+        val pharmacyList = listOf(pharmacyDataClose,pharmacyDataOpen,pharmacyDataOpen1)
 
-        val checkPharmacy: @Composable (List<Pharmacy>) -> Unit = { list ->
+        val checkPharmacy: @Composable (List<PharmacyData>) -> Unit = { list ->
             for (pharmacy in list) {
                 if (pharmacy.open == true) {
-                    CustomFarmaciasDeTurno(pharmacy = pharmacy)
+                    CustomFarmaciasDeTurno(pharmacyData = pharmacy)
                 }
             }
         }
@@ -87,7 +88,7 @@ fun PharmacyScreen(){
 }
 
 @Composable
-fun CustomFarmaciasDeTurno(pharmacy: Pharmacy){
+fun CustomFarmaciasDeTurno(pharmacyData: PharmacyData){
     Spacer(modifier = Modifier.padding(5.dp))
 
     val gradientColors =
@@ -118,20 +119,20 @@ fun CustomFarmaciasDeTurno(pharmacy: Pharmacy){
                 modifier = Modifier
             ) {
                 Text(
-                    text = pharmacy.pharmacyName,
+                    text = pharmacyData.pharmacyName,
                     style = MaterialTheme.typography.titleMedium,
                     fontSize = 22.sp,
                     textAlign = TextAlign.Center
                 )
                 Text(
-                    text = pharmacy.pharmacyAddress,
+                    text = pharmacyData.pharmacyAddress,
                     style = MaterialTheme.typography.titleSmall,
                     fontSize = 18.sp,
                     textAlign = TextAlign.Center,
                     modifier = Modifier.clickable { /*TODO: Abrir googleMaps en la ubicacion correcta*/ }
                 )
                 Text(
-                    text = pharmacy.pharmacyPhone,
+                    text = pharmacyData.pharmacyPhone,
                     style = MaterialTheme.typography.titleSmall,
                     fontSize = 18.sp,
                     textAlign = TextAlign.Center,

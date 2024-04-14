@@ -14,10 +14,18 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.sp
+import com.example.c17_129_kotlin.police.PoliceScreen
+import com.google.firebase.Firebase
+import com.google.firebase.analytics.FirebaseAnalytics
+import com.google.firebase.analytics.analytics
+
 
 class MainActivity : ComponentActivity() {
+    private lateinit var analytics: FirebaseAnalytics
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        analytics = Firebase.analytics
         setContent {
             MyApp()
         }
@@ -44,6 +52,6 @@ fun WelcomeText() {
 @Composable
 fun MyApp() {
     Surface(modifier = Modifier.fillMaxSize()) {
-        WelcomeText()
+        PoliceScreen()
     }
 }
