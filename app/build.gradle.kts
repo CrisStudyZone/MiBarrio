@@ -82,4 +82,9 @@ dependencies {
 
     //GIF
     implementation (libs.android.gif.drawable)
+
+    //CAMERA
+    implementation (libs.androidx.camera.camera2)
+    implementation (libs.androidx.camera.lifecycle)
+    implementation (libs.androidx.camera.view)
 }
