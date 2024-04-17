@@ -211,7 +211,7 @@ fun Log(navController: NavHostController) {
                         color = Color(android.graphics.Color.parseColor("#EA7B29"))
                     )
                     Image(
-                        painter = painterResource(id = R.drawable.google),
+                        painter = painterResource(id = R.drawablegoogle),
                         contentDescription = "google",
                         modifier = Modifier.size(24.dp)
                     )
