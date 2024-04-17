@@ -1,6 +1,5 @@
 package com.example.c17_129_kotlin.login
 
-import android.content.Context
 import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -57,9 +56,12 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.firebase.auth.GoogleAuthProvider
 import kotlinx.coroutines.launch
 
+
 @OptIn(ExperimentalMaterial3Api::class)
+//@Preview
 @Composable
 fun Log(navController: NavHostController) {
+    /*
 
     val context = LocalContext.current
     val auth: AuthManager = AuthManager(context)
@@ -125,108 +127,19 @@ fun Log(navController: NavHostController) {
                 onClick = { /* Aquí puedes poner la lógica que se ejecutará cuando se haga clic en el botón */ },
                 text = "Login with",
                 imageResource = R.drawable.imagen_pequena_farmacia,
+            Button(
+                onClick = { /*TODO*/ },
                 modifier = Modifier
-                    .padding(start = 8.dp)
+                    .padding(end = 8.dp)
                     .weight(1f)
                     .height(55.dp),
-                borderColor = Color(android.graphics.Color.parseColor("#28A9E2")),
-                textColor = Color(android.graphics.Color.parseColor("#EA7B29"))
-            )
-        }
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(24.dp),
-                verticalAlignment = Alignment.CenterVertically
-            )
-            {
-                Box(
-                    modifier = Modifier
-                        .height(1.dp)
-                        .weight(1f)
-                        .background(color = Color(android.graphics.Color.parseColor("#2CAADE")))
-                )
-                Text(
-                    text = "OR",
-                    fontSize = 14.sp,
-                    modifier = Modifier
-                        .padding(start = 8.dp, end = 8.dp),
-                    color = Color(android.graphics.Color.parseColor("#2CAADE"))
-                )
-                Box(
-                    modifier = Modifier
-                        .height(1.dp)
-                        .weight(1f)
-                        .background(color = Color(android.graphics.Color.parseColor("#2caade")))
-                )
-
-            }
-
-            var email by remember { mutableStateOf("") }
-
-            var password by remember { mutableStateOf("") }
-
-            var passwordVisible by rememberSaveable {
-                mutableStateOf(false)
-
-            }
-
-            TextField(
-                value = email,
-                onValueChange = { email = it },
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(66.dp)
-                    .padding(start = 50.dp, end = 50.dp, top = 8.dp, bottom = 8.dp)
-                    .border(
-                        1.dp, Color(android.graphics.Color.parseColor("#18ABA3"))
-                    )
-                    .background(
-                        Color(android.graphics.Color.parseColor("#18ABA3")),
-                        RoundedCornerShape(10.dp)
-                    ),
-                label = { Text(text = "Email ID / Phone No.") },
-                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
-                singleLine = true,
-                maxLines = 1,
-                colors = TextFieldDefaults.outlinedTextFieldColors(
-                    Color.White,
-                    focusedBorderColor = Color.Transparent,
-                    unfocusedBorderColor = Color.Transparent,
-                )
-            )
-
-            TextField(
-                value = password,
-                onValueChange = { password = it },
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(66.dp)
-                    .padding(start = 50.dp, end = 50.dp, top = 8.dp, bottom = 8.dp)
-                    .border(
-                        1.dp, Color(android.graphics.Color.parseColor("#18ABA3"))
-                    )
-                    .background(
-                        Color(android.graphics.Color.parseColor("#18ABA3")),
-                        RoundedCornerShape(10.dp)
-                    ),
-                label = { Text("Password") },
-                singleLine = true,
-                maxLines = 1,
-                colors = TextFieldDefaults.outlinedTextFieldColors(
-                    Color.White,
-                    focusedBorderColor = Color.Transparent,
-                    unfocusedBorderColor = Color.Transparent,
+                border = BorderStroke(
+                    1.dp,
+                    color = Color(android.graphics.Color.parseColor("#28A9E2"))
                 ),
-                visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
-                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password)
-            )
-
-            Spacer(modifier = Modifier.height(16.dp))
-
-            Box(
-                contentAlignment = Alignment.Center,
-                modifier = Modifier.fillMaxWidth()
+                colors = ButtonDefaults.buttonColors(Color.Transparent),
+                shape = RoundedCornerShape(10.dp),
+                contentPadding = PaddingValues(8.dp)
             ) {
                 Button(
                     onClick = {
@@ -292,21 +205,177 @@ fun Log(navController: NavHostController) {
                     colors = ButtonDefaults.buttonColors(Color.Transparent),
                     shape = RoundedCornerShape(10.dp)
                 ) {
+                Row(verticalAlignment = Alignment.CenterVertically) {
                     Text(
-                        text = "Reset Password",
+                        text = "Login with ",
                         color = Color(android.graphics.Color.parseColor("#EA7B29"))
+                    )
+                    Image(
+                        painter = painterResource(id = R.drawable.google),
+                        contentDescription = "google",
+                        modifier = Modifier.size(24.dp)
                     )
                 }
             }
 
-            Spacer(modifier = Modifier.height(16.dp))
+            Button(
+                onClick = { /*TODO*/ },
+                modifier = Modifier
+                    .padding(start = 8.dp)
+                    .weight(1f)
+                    .height(55.dp),
+                border = BorderStroke(
+                    1.dp,
+                    color = Color(android.graphics.Color.parseColor("#28A9E2"))
+                ),
+                colors = ButtonDefaults.buttonColors(Color.Transparent),
+                shape = RoundedCornerShape(10.dp),
+                contentPadding = PaddingValues(8.dp)
+            ) {
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    Text(
+                        text = "Login with ",
+                        color = Color(android.graphics.Color.parseColor("#EA7B29"))
+                    )
+                    Image(
+                        painter = painterResource(id = R.drawable.facebook),
+                        contentDescription = "facebook",
+                        modifier = Modifier.size(24.dp)
+                    )
+                }
+            }
+        }
+
+        Row(modifier = Modifier
+            .fillMaxWidth()
+            .padding(24.dp),
+            verticalAlignment = Alignment.CenterVertically)
+        {
+            Box(modifier = Modifier
+                .height(1.dp)
+                .weight(1f)
+                .background(color = Color(android.graphics.Color.parseColor("#2CAADE")))
+            )
+            Text(text = "OR",
+                fontSize = 14.sp,
+                modifier = Modifier
+                    .padding(start = 8.dp, end = 8.dp),
+                color = Color(android.graphics.Color.parseColor("#2CAADE"))
+            )
+            Box(modifier = Modifier
+                .height(1.dp)
+                .weight(1f)
+                .background(color = Color(android.graphics.Color.parseColor("#2caade")))
+            )
+
+        }
+
+        var email by remember { mutableStateOf("") }
+
+        var password by remember { mutableStateOf("") }
+
+        var passwordVisible by rememberSaveable { mutableStateOf(false)
+
+        }
+
+        TextField(
+            value = email,
+            onValueChange = { email = it },
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(66.dp)
+                .padding(start = 50.dp, end = 50.dp, top = 8.dp, bottom = 8.dp)
+                .border(
+                    1.dp, Color(android.graphics.Color.parseColor("#18ABA3"))
+                )
+                .background(
+                    Color(android.graphics.Color.parseColor("#18ABA3")),
+                    RoundedCornerShape(10.dp)
+                ),
+            label = { Text(text = "Email ID / Phone No.") },
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
+            singleLine = true,
+            maxLines = 1,
+            colors = TextFieldDefaults.outlinedTextFieldColors(
+                Color.White,
+                focusedBorderColor = Color.Transparent,
+                unfocusedBorderColor = Color.Transparent,
+            )
+        )
+
+        TextField(
+            value = password,
+            onValueChange = { password = it },
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(66.dp)
+                .padding(start = 50.dp, end = 50.dp, top = 8.dp, bottom = 8.dp)
+                .border(
+                    1.dp, Color(android.graphics.Color.parseColor("#18ABA3"))
+                )
+                .background(
+                    Color(android.graphics.Color.parseColor("#18ABA3")),
+                    RoundedCornerShape(10.dp)
+                ),
+            label = { Text("Password") },
+            singleLine = true,
+            maxLines = 1,
+            colors = TextFieldDefaults.outlinedTextFieldColors(
+                Color.White,
+                focusedBorderColor = Color.Transparent,
+                unfocusedBorderColor = Color.Transparent,
+            ),
+            visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password)
+        )
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        Box(
+            contentAlignment = Alignment.Center,
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Button(
+                onClick = { /*TODO*/ },
+                modifier = Modifier
+                    .padding(start = 50.dp, end = 50.dp, top = 8.dp, bottom = 8.dp)
+                    .height(66.dp)
+                    .fillMaxWidth()
+                    .background(
+                        color = Color(android.graphics.Color.parseColor("#2CAADE")),
+                        shape = RoundedCornerShape(40.dp)
+                    ),
+                border = BorderStroke(
+                    1.dp,
+                    color = Color(android.graphics.Color.parseColor("#28A9E2"))
+                ),
+                colors = ButtonDefaults.buttonColors(Color.Transparent),
+                shape = RoundedCornerShape(40.dp)
+            ) {
+                Text(text = "LOGIN")
+            }
+        }
+
+        Spacer(modifier = Modifier.height(8.dp))
+
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.Center,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Text(text = "Forgot Password ?",
+                textAlign = TextAlign.Center,
+                fontSize = 15.sp
+            )
+
+            Spacer(modifier = Modifier.width(15.dp))
 
             Button(
                 onClick = { /*TODO*/ },
                 modifier = Modifier
-                    .padding(start = 64.dp, end = 64.dp, top = 8.dp, bottom = 8.dp)
+                    .padding(top = 10.dp, bottom = 10.dp, end = 8.dp)
                     .height(30.dp)
-                    .widthIn(min = 300.dp),
+                    .widthIn(min = 100.dp),
                 border = BorderStroke(
                     1.dp,
                     color = Color(android.graphics.Color.parseColor("#28A9E2"))
@@ -315,42 +384,35 @@ fun Log(navController: NavHostController) {
                 shape = RoundedCornerShape(10.dp)
             ) {
                 Text(
-                    text = "Sign up..",
+                    text = "Reset Password",
                     color = Color(android.graphics.Color.parseColor("#EA7B29"))
                 )
             }
-
         }
-    }
 
-    @Composable
-    fun CustomButton(
-        onClick: () -> Unit,
-        text: String,
-        imageResource: Int,
-        modifier: Modifier = Modifier,
-        borderColor: Color = Color(android.graphics.Color.parseColor("#28A9E2")),
-        textColor: Color = Color(android.graphics.Color.parseColor("#EA7B29"))
-    ) {
+        Spacer(modifier = Modifier.height(16.dp))
+
         Button(
-            onClick = onClick,
-            modifier = modifier
-                .padding(end = 8.dp)
-                .height(55.dp),
-            border = BorderStroke(1.dp, color = borderColor),
+            onClick = { /*TODO*/ },
+            modifier = Modifier
+                .padding(start = 64.dp, end = 64.dp, top = 8.dp, bottom = 8.dp)
+                .height(30.dp)
+                .widthIn(min = 300.dp),
+            border = BorderStroke(
+                1.dp,
+                color = Color(android.graphics.Color.parseColor("#28A9E2"))
+            ),
             colors = ButtonDefaults.buttonColors(Color.Transparent),
-            shape = RoundedCornerShape(10.dp),
-            contentPadding = PaddingValues(8.dp)
+            shape = RoundedCornerShape(10.dp)
         ) {
-            Row(verticalAlignment = Alignment.CenterVertically) {
-                Text(text = text, color = textColor)
-                Image(
-                    painter = painterResource(id = imageResource),
-                    contentDescription = "Image",
-                    modifier = Modifier.size(24.dp)
-                )
-            }
+            Text(
+                text = "Sign up..",
+                color = Color(android.graphics.Color.parseColor("#EA7B29"))
+            )
         }
-    }
 
+    }
+}
+    */
+}
 
