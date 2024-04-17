@@ -15,6 +15,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.sp
 import com.example.c17_129_kotlin.police.PoliceScreen
+import com.example.c17_129_kotlin.upgrade.CustomUpgradeScreen
+import com.example.c17_129_kotlin.upgrade.UpgradeScreen
 import com.google.firebase.Firebase
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.analytics.analytics
@@ -52,6 +54,6 @@ fun WelcomeText() {
 @Composable
 fun MyApp() {
     Surface(modifier = Modifier.fillMaxSize()) {
-        PoliceScreen()
+        UpgradeScreen()
     }
 }
