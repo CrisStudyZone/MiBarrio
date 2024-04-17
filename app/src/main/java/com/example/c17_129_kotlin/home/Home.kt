@@ -115,9 +115,9 @@ fun MainMenu(){
 }
 
 @Composable
-fun ScreenMainMenu(auth: AuthManager){
+fun ScreenMainMenu(/*auth: AuthManager*/){
 
-    val user = auth.getCurrentUser()
+    //val user = auth.getCurrentUser()
 
     Column {
         ImageDisplayMain()

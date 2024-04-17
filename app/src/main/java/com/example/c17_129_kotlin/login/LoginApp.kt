@@ -39,6 +39,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
@@ -47,7 +48,9 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
 import com.example.c17_129_kotlin.R
+import com.example.c17_129_kotlin.home.navigation.HomeScreens
 import com.example.c17_129_kotlin.utils.AuthManager
 import com.example.c17_129_kotlin.utils.AuthRes
 import com.google.android.gms.auth.api.signin.GoogleSignIn
@@ -56,7 +59,10 @@ import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun <GoogleSignInAccount> Log(context: Context, auth: AuthManager) {
+fun Log(navController: NavHostController) {
+
+    val context = LocalContext.current
+    val auth: AuthManager = AuthManager(context)
 
     val scope = rememberCoroutineScope()
 
@@ -109,7 +115,7 @@ fun <GoogleSignInAccount> Log(context: Context, auth: AuthManager) {
                 .padding(16.dp)
         ) {
             CustomButton(
-                onClick = { /* Aquí puedes poner la lógica que se ejecutará cuando se haga clic en el botón */ },
+                onClick = {},
                 text = "Login with",
                 imageResource = R.drawable.imagen_pequena_farmacia,
                 modifier = Modifier.weight(1f)
@@ -223,7 +229,22 @@ fun <GoogleSignInAccount> Log(context: Context, auth: AuthManager) {
                 modifier = Modifier.fillMaxWidth()
             ) {
                 Button(
-                    onClick = { /*TODO*/ },
+                    onClick = {
+                        scope.launch {
+                            when(val result = auth.createUserWithEmailAndPassword(email = email, password = password)){
+                                is AuthRes.Error -> {
+                                    android.util.Log.d("LOGIN","Error LogIn: ${result.errorMessage}")
+                                    Toast.makeText(context, "El usuario no existe", Toast.LENGTH_SHORT).show()
+                                }
+                                is AuthRes.Success -> {
+                                    navController.navigate(HomeScreens.HomeScreen.route){
+                                        popUpTo(HomeScreens.LoginScreen.route){inclusive = true}
+                                    }
+                                }
+                            }
+
+                        } }
+                    ,
                     modifier = Modifier
                         .padding(start = 50.dp, end = 50.dp, top = 8.dp, bottom = 8.dp)
                         .height(66.dp)
