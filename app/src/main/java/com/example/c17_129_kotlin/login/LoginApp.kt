@@ -1,6 +1,6 @@
 package com.example.c17_129_kotlin.login
 
-/*import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -87,7 +87,7 @@ private fun Log() {
                         color = Color(android.graphics.Color.parseColor("#EA7B29"))
                     )
                     Image(
-                        painter = painterResource(id = R.drawable.google),
+                        painter = painterResource(id = R.drawable.icono_google),
                         contentDescription = "google",
                         modifier = Modifier.size(24.dp)
                     )
@@ -114,7 +114,7 @@ private fun Log() {
                         color = Color(android.graphics.Color.parseColor("#EA7B29"))
                     )
                     Image(
-                        painter = painterResource(id = R.drawable.facebook),
+                        painter = painterResource(id = R.drawable.icono_facebook),
                         contentDescription = "facebook",
                         modifier = Modifier.size(24.dp)
                     )
@@ -289,5 +289,3 @@ private fun Log() {
 
     }
 }
-
- */
