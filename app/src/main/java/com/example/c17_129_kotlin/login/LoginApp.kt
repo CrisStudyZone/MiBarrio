@@ -1,6 +1,6 @@
 package com.example.c17_129_kotlin.login
 
-import androidx.compose.foundation.BorderStroke
+/*import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -286,6 +286,8 @@ private fun Log() {
                 color = Color(android.graphics.Color.parseColor("#EA7B29"))
             )
         }
-        
+
     }
 }
+
+ */
