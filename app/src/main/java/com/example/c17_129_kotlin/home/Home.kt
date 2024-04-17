@@ -31,6 +31,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.c17_129_kotlin.R
+import com.example.c17_129_kotlin.utils.AuthManager
+import com.google.firebase.auth.FirebaseAuth
 
 @Composable
 fun ImageDisplayMain(){
@@ -80,7 +82,6 @@ fun CustomMenu(colorGradient1: Color, colorGradient2: Color, imageResId: Int, te
             ) {
                 Image(
                     painter = painterResource(id = imageResId),
-
                     contentDescription = null,
                     modifier = Modifier
                         .fillMaxHeight()
@@ -114,9 +115,21 @@ fun MainMenu(){
 }
 
 @Composable
-fun ScreenMainMenu(){
+fun ScreenMainMenu(auth: AuthManager){
+
+    val user = auth.getCurrentUser()
+
     Column {
         ImageDisplayMain()
         MainMenu()
     }
 }
+/*
+@Composable
+fun Color(){
+    val mapaDeColores = mapOf(
+        1 to Color.White
+    )
+}
+
+*/
