@@ -94,8 +94,13 @@ dependencies {
     implementation (libs.androidx.camera.lifecycle)
     implementation (libs.androidx.camera.view)
 
+    //Tools
+    implementation(libs.material.vversion)
+    androidTestImplementation(libs.androidx.espresso.core.vversion)
+
     // Navigation Compose
     implementation(libs.androidx.navigation.compose)
     implementation (libs.androidx.navigation.compose.v253)
+
 
 }
