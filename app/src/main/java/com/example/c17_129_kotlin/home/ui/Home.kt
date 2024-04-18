@@ -1,4 +1,4 @@
-package com.example.c17_129_kotlin.home
+package com.example.c17_129_kotlin.home.ui
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -30,9 +30,9 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
 import com.example.c17_129_kotlin.R
-import com.example.c17_129_kotlin.utils.AuthManager
-import com.google.firebase.auth.FirebaseAuth
+import com.example.c17_129_kotlin.home.navigation.HomeScreens
 
 @Composable
 fun ImageDisplayMain(){
@@ -52,7 +52,13 @@ fun ImageDisplayMain(){
 }
 
 @Composable
-fun CustomMenu(colorGradient1: Color, colorGradient2: Color, imageResId: Int, text: String) {
+fun CustomMenu(
+    colorGradient1: Color,
+    colorGradient2: Color,
+    imageResId: Int,
+    text: String,
+    onClick : () -> Unit
+) {
     val gradientColors =
         Brush.linearGradient(
             0.0f to colorGradient1,
@@ -68,7 +74,7 @@ fun CustomMenu(colorGradient1: Color, colorGradient2: Color, imageResId: Int, te
 
         ) {
         Button(
-            onClick = { /*Agregar la navegacio*/ },
+            onClick = { onClick() },
             modifier = Modifier
                 .fillMaxWidth(),
             colors = ButtonDefaults.buttonColors(Color.Transparent), // Color de botón transparente
@@ -103,25 +109,30 @@ fun CustomMenu(colorGradient1: Color, colorGradient2: Color, imageResId: Int, te
 }
 
 @Composable
-fun MainMenu(){
+fun MainMenu(
+    navController: NavHostController
+){
     Column {
-        CustomMenu(colorGradient1 = colorResource(id = R.color.Green), colorGradient2 = Color.White, imageResId = R.drawable.imagen_pequena_farmacia, text = "Farmacias de Turno")
-        CustomMenu(colorGradient1 = Color.White, colorGradient2 = colorResource(id = R.color.Red), imageResId = R.drawable.imagen_pequena_bomberos, text = "Bomberos")
-        CustomMenu(colorGradient1 = colorResource(id = R.color.BlueLigth), colorGradient2 = Color.White, imageResId = R.drawable.imagen_pequena_policia, text = "Policia")
-        CustomMenu(colorGradient1 = Color.White, colorGradient2 = colorResource(id = R.color.Orange), imageResId = R.drawable.imagen_pequena_obras_necesarias, text = "Obras Necesarias")
-        CustomMenu(colorGradient1 = colorResource(id = R.color.Blue),colorGradient2 = Color.White, imageResId = R.drawable.imagen_pequena_reparaciones_necesarias, text = "Reparaciones Necesarias")
+        CustomMenu(colorGradient1 = colorResource(id = R.color.Green), colorGradient2 = Color.White, imageResId = R.drawable.imagen_pequena_farmacia, text = "Farmacias de Turno", onClick = {navController.navigate(HomeScreens.PharmacyScreens.route)})
+        CustomMenu(colorGradient1 = Color.White, colorGradient2 = colorResource(id = R.color.Red), imageResId = R.drawable.imagen_pequena_bomberos, text = "Bomberos", onClick = {navController.navigate(HomeScreens.FiremanScreens.route)})
+        CustomMenu(colorGradient1 = colorResource(id = R.color.BlueLigth), colorGradient2 = Color.White, imageResId = R.drawable.imagen_pequena_policia, text = "Policia", onClick = {navController.navigate(HomeScreens.PoliceScreens.route)})
+        CustomMenu(colorGradient1 = Color.White, colorGradient2 = colorResource(id = R.color.Orange), imageResId = R.drawable.imagen_pequena_obras_necesarias, text = "Obras Necesarias", onClick = {})
+        CustomMenu(colorGradient1 = colorResource(id = R.color.Blue),colorGradient2 = Color.White, imageResId = R.drawable.imagen_pequena_reparaciones_necesarias, text = "Reparaciones Necesarias", onClick = {})
 
     }
 }
 
 @Composable
-fun ScreenMainMenu(/*auth: AuthManager*/){
+fun ScreenMainMenu(
+    navController: NavHostController
+/*auth: AuthManager*/
+){
 
     //val user = auth.getCurrentUser()
 
     Column {
         ImageDisplayMain()
-        MainMenu()
+        MainMenu(navController = navController)
     }
 }
 /*

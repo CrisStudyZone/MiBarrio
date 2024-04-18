@@ -10,4 +10,13 @@ sealed class HomeScreens(
     object LoginScreen : HomeScreens(
         route = "login_screen"
     )
+    object FiremanScreens : HomeScreens(
+        route = "fireman_screen"
+    )
+    object PharmacyScreens : HomeScreens(
+        route = "pharmacy_screen"
+    )
+    object PoliceScreens : HomeScreens(
+        route = "police_screen"
+    )
 }
