@@ -98,6 +98,9 @@ dependencies {
     implementation(libs.material.vversion)
     androidTestImplementation(libs.androidx.espresso.core.vversion)
 
+    // Navigation Compose
+    implementation(libs.androidx.navigation.compose)
+    implementation (libs.androidx.navigation.compose.v253)
 
 
 }
