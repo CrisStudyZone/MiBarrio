@@ -1,32 +1,39 @@
 package com.example.c17_129_kotlin.login
 
+import android.content.Context
+import android.opengl.Visibility
 import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.text.selection.TextSelectionColors
+import androidx.compose.material.icons.Icons
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Card
+import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -37,34 +44,263 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.navigation.NavHostController
 import com.example.c17_129_kotlin.R
-import com.example.c17_129_kotlin.home.navigation.HomeScreens
+import com.example.c17_129_kotlin.ui.theme.ButtonsLogin
+import com.example.c17_129_kotlin.ui.theme.ColorBlue
+import com.example.c17_129_kotlin.ui.theme.ColorBlueGreen
+import com.example.c17_129_kotlin.ui.theme.ColorPurple
+import com.example.c17_129_kotlin.ui.theme.TextLogin
 import com.example.c17_129_kotlin.utils.AuthManager
 import com.example.c17_129_kotlin.utils.AuthRes
 import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.firebase.auth.GoogleAuthProvider
 import kotlinx.coroutines.launch
 
-
-@OptIn(ExperimentalMaterial3Api::class)
-//@Preview
 @Composable
-fun Log(navController: NavHostController) {
-    /*
+fun LogScreen(auth: AuthManager){
 
     val context = LocalContext.current
-    val auth: AuthManager = AuthManager(context)
+
+    Card (
+        modifier = Modifier
+            .fillMaxSize()
+            .background(Color.Transparent)
+    ) {
+    Column (
+        verticalArrangement = Arrangement.Top,
+        horizontalAlignment = Alignment.CenterHorizontally,
+        modifier = Modifier
+            .fillMaxSize()
+    ){
+        Spacer(modifier = Modifier.padding(30.dp))
+        Image(
+            modifier = Modifier
+                .align(Alignment.CenterHorizontally)
+                .size(171.dp, 128.dp),
+            painter = painterResource(id = R.drawable.logo),
+            contentDescription = null)
+        Spacer(modifier = Modifier.padding(30.dp))
+
+
+        Row (
+            modifier = Modifier
+                .fillMaxWidth(),
+            horizontalArrangement = Arrangement.Center
+        ){
+            CustomButton(image = R.drawable.icono_google, text = "Login With", onClick = { LoginWithGoogle<GoogleSignInAccount>(context = context, AuthManager(context = context))})
+            Spacer(modifier = Modifier.padding(20.dp))
+            CustomButton(image = R.drawable.icono_facebook, text = "Login With", onClick = { LoginWithFacebook() })
+        }
+
+        Spacer(modifier = Modifier.padding(10.dp))
+
+        Separator(text = "OR")
+
+        Spacer(modifier = Modifier.padding(10.dp))
+
+        LoginWithMailAndPassword(context = context, auth = auth)
+
+        Spacer(modifier = Modifier.padding(10.dp))
+
+        Row (
+            horizontalArrangement = Arrangement.Center,
+            modifier = Modifier
+                .fillMaxWidth()
+        ){
+            
+            ButtonForgotPassword()
+
+            Spacer(modifier = Modifier.padding(10.dp))
+
+            ButtonResetPassword()
+            
+        }
+
+        Spacer(modifier = Modifier.padding(30.dp))
+
+        ButtonSingUp()
+
+    }
+}
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun LoginWithMailAndPassword(context: Context, auth: AuthManager){
+
+    val scope = rememberCoroutineScope()
+
+    // Estados para el email y la contraseña
+    var email by remember { mutableStateOf("") }
+    var password by remember { mutableStateOf("") }
+
+    // Función para manejar el clic del botón de registro
+    val handleRegisterClick: () -> Unit = {
+        if (email.isNotEmpty() && password.isNotEmpty()) {
+            // Realizar el registro con correo electrónico y contraseña
+            scope.launch {
+                when (val registerResult = auth.singInWithEmailAndPassword(email, password)) {
+                    is AuthRes.Success -> {
+                        // Registro exitoso, realizar acciones necesarias (navegación, etc.)
+                        Toast.makeText(context, "Registro exitoso", Toast.LENGTH_SHORT).show()
+                        // Navegar a la siguiente pantalla (por ejemplo, la pantalla de inicio)
+                    }
+                    is AuthRes.Error -> {
+                        // Manejar el caso en que el registro falla
+                        Toast.makeText(context, "Error: ${registerResult.errorMessage}", Toast.LENGTH_SHORT).show()
+                    }
+                }
+            }
+        } else {
+            // Mostrar un mensaje si el email o la contraseña están vacíos
+            Toast.makeText(context, "Por favor, ingresa el email y la contraseña", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(16.dp)
+            .background(Color.Transparent),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        var textEmail by remember { mutableStateOf("Email ID / Phone No.") }
+        var textPassword by remember { mutableStateOf("Password") }
+        var passwordVisible by rememberSaveable { mutableStateOf(false) }
+
+
+            val customTextFieldColors = TextFieldDefaults.colors(
+            selectionColors = TextSelectionColors(backgroundColor = ButtonsLogin, handleColor = ButtonsLogin) // Aquí puedes especificar el color de fondo deseado
+        )
+
+        OutlinedTextField(
+            value = textEmail,
+            onValueChange = { email = it},
+            modifier = Modifier
+                .background(
+                    color = ButtonsLogin.copy(alpha = 0.7f),
+                    shape = RoundedCornerShape(10.dp)
+                )
+                .border(
+                    width = 1.dp,
+                    color = ButtonsLogin,
+                    shape = RoundedCornerShape(10.dp)
+                ),
+            shape = RoundedCornerShape(10.dp)
+        )
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        OutlinedTextField(
+            value = textPassword,
+            onValueChange = { email = it},
+            modifier = Modifier
+                .background(
+                    color = ButtonsLogin.copy(alpha = 0.7f),
+                    shape = RoundedCornerShape(10.dp)
+                )
+                .border(
+                    width = 1.dp,
+                    color = ButtonsLogin,
+                    shape = RoundedCornerShape(10.dp)
+                ),
+            shape = RoundedCornerShape(10.dp),
+            colors = OutlinedTextFieldDefaults.colors(
+                focusedTextColor = Color.White,
+                focusedBorderColor = Color.Transparent,
+                unfocusedBorderColor = Color.Transparent,
+            ),
+            visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
+            trailingIcon = {
+                IconButton(
+                    onClick = { passwordVisible = !passwordVisible },
+                ) {
+                    Image(
+                        painter = VisibilityPassword(passwordVisible),
+                        contentDescription = if (passwordVisible) "Hide Password" else "Show Password"
+                    )
+                }
+            }
+        )
+        Spacer(modifier = Modifier.height(16.dp))
+        ContainedButtonExample()
+    }
+}
+
+@Composable
+fun ContainedButtonExample() {
+    val WIDTH1 = 150.dp
+    val WIDTH2 = 200.dp
+    val WIDTH3 = 300.dp
+
+    var width by remember { mutableStateOf(WIDTH1) }
+
+
+
+    Button(
+        onClick = {
+            width = when (width) {
+                WIDTH1 -> WIDTH2
+                WIDTH2 -> WIDTH3
+                else -> WIDTH1
+            }
+            /*TODO terminar Auth*/
+        },
+        modifier = Modifier.width(width).size(280.dp, 57.dp),
+        colors = ButtonDefaults.buttonColors(Color.Transparent),
+
+    ) {
+        val gradient =
+            Brush.verticalGradient(
+                listOf(ColorBlueGreen, ColorBlue, ColorPurple),
+                startY = 0.0f,
+                endY = 100.0f,
+            )
+        Box(
+            modifier = Modifier
+                .background(gradient)
+                .shadow(elevation = 2.dp, shape = RoundedCornerShape(8.dp))
+                .padding(horizontal = 16.dp, vertical = 8.dp)
+                .clickable {
+                    width = when (width) {
+                        WIDTH1 -> WIDTH2
+                        WIDTH2 -> WIDTH3
+                        else -> WIDTH1
+                    }
+                },
+            contentAlignment = Alignment.Center,
+
+        ) {
+            Text("LOGIN")
+        }
+    }
+}
+@Composable
+fun VisibilityPassword(passwordVisible: Boolean): Painter {
+    return if (passwordVisible) {
+         painterResource(id = R.drawable.icon_visibility)
+    }
+    else painterResource(id = R.drawable.icon_visibility_off)
+}
+
+@Composable
+fun <GoogleSignInAccount> LoginWithGoogle(context: Context, auth: AuthManager){
 
     val scope = rememberCoroutineScope()
 
@@ -96,323 +332,126 @@ fun Log(navController: NavHostController) {
             }
         }
     }
+}
 
-    Column(
+@Composable
+fun LoginWithFacebook(){
+
+}
+
+@Composable
+fun CustomButton(image: Int, text: String, onClick: @Composable () -> Unit){
+    Box(
         modifier = Modifier
-            .fillMaxWidth()
-            .fillMaxHeight()
-            .background(color = Color(android.graphics.Color.parseColor("#ffffff"))),
-        horizontalAlignment = Alignment.CenterHorizontally
-
+            .size(144.dp, 36.dp)
+            .background(Color.Transparent)
+            .border(width = 2.dp, color = ButtonsLogin, shape = RoundedCornerShape(8.dp))
+            .clickable { onClick },
+        contentAlignment = Alignment.Center
     ) {
-        Image(
-            painter = painterResource(id = R.drawable.logo),
-            contentDescription = "logo",
-            modifier = Modifier.padding(30.dp)
-        )
-
         Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(16.dp)
-        ) {
-            CustomButton(
-                onClick = {},
-                text = "Login with",
-                imageResource = R.drawable.imagen_pequena_farmacia,
-                modifier = Modifier.weight(1f)
-            )
-
-            CustomButton(
-                onClick = { /* Aquí puedes poner la lógica que se ejecutará cuando se haga clic en el botón */ },
-                text = "Login with",
-                imageResource = R.drawable.imagen_pequena_farmacia,
-            Button(
-                onClick = { /*TODO*/ },
-                modifier = Modifier
-                    .padding(end = 8.dp)
-                    .weight(1f)
-                    .height(55.dp),
-                border = BorderStroke(
-                    1.dp,
-                    color = Color(android.graphics.Color.parseColor("#28A9E2"))
-                ),
-                colors = ButtonDefaults.buttonColors(Color.Transparent),
-                shape = RoundedCornerShape(10.dp),
-                contentPadding = PaddingValues(8.dp)
-            ) {
-                Button(
-                    onClick = {
-                        scope.launch {
-                            when(val result = auth.createUserWithEmailAndPassword(email = email, password = password)){
-                                is AuthRes.Error -> {
-                                    android.util.Log.d("LOGIN","Error LogIn: ${result.errorMessage}")
-                                    Toast.makeText(context, "El usuario no existe", Toast.LENGTH_SHORT).show()
-                                }
-                                is AuthRes.Success -> {
-                                    navController.navigate(HomeScreens.HomeScreen.route){
-                                        popUpTo(HomeScreens.LoginScreen.route){inclusive = true}
-                                    }
-                                }
-                            }
-
-                        } }
-                    ,
-                    modifier = Modifier
-                        .padding(start = 50.dp, end = 50.dp, top = 8.dp, bottom = 8.dp)
-                        .height(66.dp)
-                        .fillMaxWidth()
-                        .background(
-                            color = Color(android.graphics.Color.parseColor("#2CAADE")),
-                            shape = RoundedCornerShape(40.dp)
-                        ),
-                    border = BorderStroke(
-                        1.dp,
-                        color = Color(android.graphics.Color.parseColor("#28A9E2"))
-                    ),
-                    colors = ButtonDefaults.buttonColors(Color.Transparent),
-                    shape = RoundedCornerShape(40.dp)
-                ) {
-                    Text(text = "LOGIN")
-                }
-            }
-
-            Spacer(modifier = Modifier.height(8.dp))
-
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.Center,
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Text(
-                    text = "Forgot Password ?",
-                    textAlign = TextAlign.Center,
-                    fontSize = 15.sp
-                )
-
-                Spacer(modifier = Modifier.width(15.dp))
-
-                Button(
-                    onClick = { /*TODO*/ },
-                    modifier = Modifier
-                        .padding(top = 10.dp, bottom = 10.dp, end = 8.dp)
-                        .height(30.dp)
-                        .widthIn(min = 100.dp),
-                    border = BorderStroke(
-                        1.dp,
-                        color = Color(android.graphics.Color.parseColor("#28A9E2"))
-                    ),
-                    colors = ButtonDefaults.buttonColors(Color.Transparent),
-                    shape = RoundedCornerShape(10.dp)
-                ) {
-                Row(verticalAlignment = Alignment.CenterVertically) {
-                    Text(
-                        text = "Login with ",
-                        color = Color(android.graphics.Color.parseColor("#EA7B29"))
-                    )
-                    Image(
-                        painter = painterResource(id = R.drawablegoogle),
-                        contentDescription = "google",
-                        modifier = Modifier.size(24.dp)
-                    )
-                }
-            }
-
-            Button(
-                onClick = { /*TODO*/ },
-                modifier = Modifier
-                    .padding(start = 8.dp)
-                    .weight(1f)
-                    .height(55.dp),
-                border = BorderStroke(
-                    1.dp,
-                    color = Color(android.graphics.Color.parseColor("#28A9E2"))
-                ),
-                colors = ButtonDefaults.buttonColors(Color.Transparent),
-                shape = RoundedCornerShape(10.dp),
-                contentPadding = PaddingValues(8.dp)
-            ) {
-                Row(verticalAlignment = Alignment.CenterVertically) {
-                    Text(
-                        text = "Login with ",
-                        color = Color(android.graphics.Color.parseColor("#EA7B29"))
-                    )
-                    Image(
-                        painter = painterResource(id = R.drawable.facebook),
-                        contentDescription = "facebook",
-                        modifier = Modifier.size(24.dp)
-                    )
-                }
-            }
-        }
-
-        Row(modifier = Modifier
-            .fillMaxWidth()
-            .padding(24.dp),
-            verticalAlignment = Alignment.CenterVertically)
-        {
-            Box(modifier = Modifier
-                .height(1.dp)
-                .weight(1f)
-                .background(color = Color(android.graphics.Color.parseColor("#2CAADE")))
-            )
-            Text(text = "OR",
-                fontSize = 14.sp,
-                modifier = Modifier
-                    .padding(start = 8.dp, end = 8.dp),
-                color = Color(android.graphics.Color.parseColor("#2CAADE"))
-            )
-            Box(modifier = Modifier
-                .height(1.dp)
-                .weight(1f)
-                .background(color = Color(android.graphics.Color.parseColor("#2caade")))
-            )
-
-        }
-
-        var email by remember { mutableStateOf("") }
-
-        var password by remember { mutableStateOf("") }
-
-        var passwordVisible by rememberSaveable { mutableStateOf(false)
-
-        }
-
-        TextField(
-            value = email,
-            onValueChange = { email = it },
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(66.dp)
-                .padding(start = 50.dp, end = 50.dp, top = 8.dp, bottom = 8.dp)
-                .border(
-                    1.dp, Color(android.graphics.Color.parseColor("#18ABA3"))
-                )
-                .background(
-                    Color(android.graphics.Color.parseColor("#18ABA3")),
-                    RoundedCornerShape(10.dp)
-                ),
-            label = { Text(text = "Email ID / Phone No.") },
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
-            singleLine = true,
-            maxLines = 1,
-            colors = TextFieldDefaults.outlinedTextFieldColors(
-                Color.White,
-                focusedBorderColor = Color.Transparent,
-                unfocusedBorderColor = Color.Transparent,
-            )
-        )
-
-        TextField(
-            value = password,
-            onValueChange = { password = it },
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(66.dp)
-                .padding(start = 50.dp, end = 50.dp, top = 8.dp, bottom = 8.dp)
-                .border(
-                    1.dp, Color(android.graphics.Color.parseColor("#18ABA3"))
-                )
-                .background(
-                    Color(android.graphics.Color.parseColor("#18ABA3")),
-                    RoundedCornerShape(10.dp)
-                ),
-            label = { Text("Password") },
-            singleLine = true,
-            maxLines = 1,
-            colors = TextFieldDefaults.outlinedTextFieldColors(
-                Color.White,
-                focusedBorderColor = Color.Transparent,
-                unfocusedBorderColor = Color.Transparent,
-            ),
-            visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password)
-        )
-
-        Spacer(modifier = Modifier.height(16.dp))
-
-        Box(
-            contentAlignment = Alignment.Center,
-            modifier = Modifier.fillMaxWidth()
-        ) {
-            Button(
-                onClick = { /*TODO*/ },
-                modifier = Modifier
-                    .padding(start = 50.dp, end = 50.dp, top = 8.dp, bottom = 8.dp)
-                    .height(66.dp)
-                    .fillMaxWidth()
-                    .background(
-                        color = Color(android.graphics.Color.parseColor("#2CAADE")),
-                        shape = RoundedCornerShape(40.dp)
-                    ),
-                border = BorderStroke(
-                    1.dp,
-                    color = Color(android.graphics.Color.parseColor("#28A9E2"))
-                ),
-                colors = ButtonDefaults.buttonColors(Color.Transparent),
-                shape = RoundedCornerShape(40.dp)
-            ) {
-                Text(text = "LOGIN")
-            }
-        }
-
-        Spacer(modifier = Modifier.height(8.dp))
-
-        Row(
-            modifier = Modifier.fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.Center,
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Text(text = "Forgot Password ?",
-                textAlign = TextAlign.Center,
-                fontSize = 15.sp
-            )
-
-            Spacer(modifier = Modifier.width(15.dp))
-
-            Button(
-                onClick = { /*TODO*/ },
-                modifier = Modifier
-                    .padding(top = 10.dp, bottom = 10.dp, end = 8.dp)
-                    .height(30.dp)
-                    .widthIn(min = 100.dp),
-                border = BorderStroke(
-                    1.dp,
-                    color = Color(android.graphics.Color.parseColor("#28A9E2"))
-                ),
-                colors = ButtonDefaults.buttonColors(Color.Transparent),
-                shape = RoundedCornerShape(10.dp)
-            ) {
-                Text(
-                    text = "Reset Password",
-                    color = Color(android.graphics.Color.parseColor("#EA7B29"))
-                )
-            }
-        }
-
-        Spacer(modifier = Modifier.height(16.dp))
-
-        Button(
-            onClick = { /*TODO*/ },
             modifier = Modifier
-                .padding(start = 64.dp, end = 64.dp, top = 8.dp, bottom = 8.dp)
-                .height(30.dp)
-                .widthIn(min = 300.dp),
-            border = BorderStroke(
-                1.dp,
-                color = Color(android.graphics.Color.parseColor("#28A9E2"))
-            ),
-            colors = ButtonDefaults.buttonColors(Color.Transparent),
-            shape = RoundedCornerShape(10.dp)
+                .fillMaxSize()
         ) {
             Text(
-                text = "Sign up..",
-                color = Color(android.graphics.Color.parseColor("#EA7B29"))
+                text = text,
+                fontSize = 14.sp,
+                color = TextLogin,
+                modifier = Modifier
+                    .padding(end = 8.dp) // Espacio entre el texto y la imagen
+            )
+            Icon(
+                painter = painterResource(id = image),
+                contentDescription = null,
+                modifier = Modifier.size(16.dp)
             )
         }
-
     }
 }
-    */
+
+@Composable
+fun Separator(text: String, modifier: Modifier = Modifier) {
+    Row(
+        modifier = modifier
+            .padding(start = 24.dp, end = 24.dp)
+            .fillMaxWidth(),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Divider(
+            color = ButtonsLogin,
+            thickness = 2.dp,
+            modifier = Modifier.weight(1f)
+        ) // La línea se extiende para llenar el espacio
+        Text(
+            text = text,
+            color = ButtonsLogin,
+            modifier = Modifier.padding(horizontal = 20.dp)
+        )
+        Divider(
+            color = ButtonsLogin,
+            thickness = 2.dp,
+            modifier = Modifier.weight(1f)
+        ) // Otra línea para completar el espacio restante
+    }
 }
 
+@Composable
+fun ButtonForgotPassword(){
+    Box(
+        modifier = Modifier
+            .size(144.dp, 36.dp)
+            .background(Color.Transparent)
+            .clickable { /* TODO */ },
+        contentAlignment = Alignment.Center
+    ){
+        Text(
+            text = "Forgot Password?",
+            color = Color.Black,
+            fontSize = 14.sp)
+    }
+}
+
+@Composable
+fun ButtonResetPassword(){
+    Box(
+        modifier = Modifier
+            .size(144.dp, 36.dp)
+            .background(Color.Transparent)
+            .border(width = 2.dp, color = ButtonsLogin, shape = RoundedCornerShape(8.dp))
+            .clickable { /*TODO vincular con resetPassword de authManager*/ },
+        contentAlignment = Alignment.Center
+    ){
+        Text(
+            text = "Reset Password",
+            color = TextLogin,
+            fontSize = 14.sp)
+    }
+}
+
+@Composable
+fun ButtonSingUp(){
+    Box(
+        modifier = Modifier
+            .size(256.dp, 36.dp)
+            .background(Color.Transparent)
+            .border(width = 2.dp, color = ButtonsLogin, shape = RoundedCornerShape(8.dp))
+            .clickable { /*TODO crear pantalla de registro*/ },
+        contentAlignment = Alignment.Center
+    ){
+        Text(
+            text = "Singup",
+            color = TextLogin)
+    }
+}
+
+@Preview
+@Composable
+fun LogScreenPreview() {
+    // Aquí puedes inicializar AuthManager con un contexto de prueba
+    val authManager = AuthManager(context = LocalContext.current)
+
+    // Llama a LogScreen y pasa la instancia de AuthManager
+    LogScreen(auth = authManager)
+}

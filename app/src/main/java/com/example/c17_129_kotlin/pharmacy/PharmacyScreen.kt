@@ -32,6 +32,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.c17_129_kotlin.R
@@ -42,7 +43,6 @@ import com.example.c17_129_kotlin.pharmacy.data.PharmacyData
 fun PharmacyScreen(){
     Column (
         modifier = Modifier
-            .size(80.dp)
             .fillMaxWidth()
             .padding(top = 16.dp)
     ){
@@ -188,5 +188,13 @@ fun OpenUrlInBrowser(context: Context, url: String) {
     } catch (e: ActivityNotFoundException) {
         // Manejar la excepción si no se encuentra una actividad para manejar la acción de ver la URL
     }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun PharmacyScreenPreview() {
+
+        PharmacyScreen()
+
 }
 
