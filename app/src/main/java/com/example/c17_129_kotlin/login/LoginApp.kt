@@ -1,7 +1,7 @@
 package com.example.c17_129_kotlin.login
 
 import android.content.Context
-import android.opengl.Visibility
+import android.util.Log
 import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -23,7 +23,6 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.text.selection.TextSelectionColors
-import androidx.compose.material.icons.Icons
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
@@ -45,11 +44,9 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
-import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.KeyboardType
@@ -58,7 +55,9 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
 import com.example.c17_129_kotlin.R
+import com.example.c17_129_kotlin.home.navigation.HomeScreens
 import com.example.c17_129_kotlin.ui.theme.ButtonsLogin
 import com.example.c17_129_kotlin.ui.theme.ColorBlue
 import com.example.c17_129_kotlin.ui.theme.ColorBlueGreen
@@ -72,9 +71,12 @@ import com.google.firebase.auth.GoogleAuthProvider
 import kotlinx.coroutines.launch
 
 @Composable
-fun LogScreen(auth: AuthManager){
+fun LogScreen(
+    navController: NavHostController
+){
 
     val context = LocalContext.current
+    val auth: AuthManager = AuthManager(context)
 
     Card (
         modifier = Modifier
@@ -113,7 +115,7 @@ fun LogScreen(auth: AuthManager){
 
         Spacer(modifier = Modifier.padding(10.dp))
 
-        LoginWithMailAndPassword(context = context, auth = auth)
+        LoginWithMailAndPassword(context = context, auth = auth,navController)
 
         Spacer(modifier = Modifier.padding(10.dp))
 
@@ -141,36 +143,17 @@ fun LogScreen(auth: AuthManager){
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun LoginWithMailAndPassword(context: Context, auth: AuthManager){
+fun LoginWithMailAndPassword(
+    context: Context,
+    auth: AuthManager,
+    navController: NavHostController
+){
 
     val scope = rememberCoroutineScope()
 
     // Estados para el email y la contraseña
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
-
-    // Función para manejar el clic del botón de registro
-    val handleRegisterClick: () -> Unit = {
-        if (email.isNotEmpty() && password.isNotEmpty()) {
-            // Realizar el registro con correo electrónico y contraseña
-            scope.launch {
-                when (val registerResult = auth.singInWithEmailAndPassword(email, password)) {
-                    is AuthRes.Success -> {
-                        // Registro exitoso, realizar acciones necesarias (navegación, etc.)
-                        Toast.makeText(context, "Registro exitoso", Toast.LENGTH_SHORT).show()
-                        // Navegar a la siguiente pantalla (por ejemplo, la pantalla de inicio)
-                    }
-                    is AuthRes.Error -> {
-                        // Manejar el caso en que el registro falla
-                        Toast.makeText(context, "Error: ${registerResult.errorMessage}", Toast.LENGTH_SHORT).show()
-                    }
-                }
-            }
-        } else {
-            // Mostrar un mensaje si el email o la contraseña están vacíos
-            Toast.makeText(context, "Por favor, ingresa el email y la contraseña", Toast.LENGTH_SHORT).show()
-        }
-    }
 
     Column(
         modifier = Modifier
@@ -189,7 +172,7 @@ fun LoginWithMailAndPassword(context: Context, auth: AuthManager){
         )
 
         OutlinedTextField(
-            value = textEmail,
+            value = email,
             onValueChange = { email = it},
             modifier = Modifier
                 .background(
@@ -207,8 +190,8 @@ fun LoginWithMailAndPassword(context: Context, auth: AuthManager){
         Spacer(modifier = Modifier.height(16.dp))
 
         OutlinedTextField(
-            value = textPassword,
-            onValueChange = { email = it},
+            value = password,
+            onValueChange = { password = it},
             modifier = Modifier
                 .background(
                     color = ButtonsLogin.copy(alpha = 0.7f),
@@ -239,12 +222,30 @@ fun LoginWithMailAndPassword(context: Context, auth: AuthManager){
             }
         )
         Spacer(modifier = Modifier.height(16.dp))
-        ContainedButtonExample()
+        ContainedButtonExample(
+            onClick = {
+                scope.launch {
+                    when(val result = auth.createUserWithEmailAndPassword(email = email, password = password)){
+                        is AuthRes.Error -> {
+                            Log.d("LOGIN","Error LogIn: ${result.errorMessage}")
+                            Toast.makeText(context, "El usuario no existe", Toast.LENGTH_SHORT).show()
+                        }
+                        is AuthRes.Success -> {
+                            navController.navigate(HomeScreens.HomeScreen.route){
+                                popUpTo(HomeScreens.LoginScreen.route){inclusive = true}
+                            }
+                        }
+                    }
+                }
+            }
+        )
     }
 }
 
 @Composable
-fun ContainedButtonExample() {
+fun ContainedButtonExample(
+    onClick: () -> Unit
+) {
     val WIDTH1 = 150.dp
     val WIDTH2 = 200.dp
     val WIDTH3 = 300.dp
@@ -260,7 +261,7 @@ fun ContainedButtonExample() {
                 WIDTH2 -> WIDTH3
                 else -> WIDTH1
             }
-            /*TODO terminar Auth*/
+            onClick()
         },
         modifier = Modifier.width(width).size(280.dp, 57.dp),
         colors = ButtonDefaults.buttonColors(Color.Transparent),
@@ -449,9 +450,9 @@ fun ButtonSingUp(){
 @Preview
 @Composable
 fun LogScreenPreview() {
-    // Aquí puedes inicializar AuthManager con un contexto de prueba
-    val authManager = AuthManager(context = LocalContext.current)
-
-    // Llama a LogScreen y pasa la instancia de AuthManager
-    LogScreen(auth = authManager)
+//    // Aquí puedes inicializar AuthManager con un contexto de prueba
+//    val authManager = AuthManager(context = LocalContext.current)
+//
+//    // Llama a LogScreen y pasa la instancia de AuthManager
+//    LogScreen(auth = authManager)
 }
