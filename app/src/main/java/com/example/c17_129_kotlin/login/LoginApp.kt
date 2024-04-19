@@ -184,6 +184,7 @@ fun LoginWithMailAndPassword(
                     color = ButtonsLogin,
                     shape = RoundedCornerShape(10.dp)
                 ),
+            label = { Text(text = "Email ID / Phone No.") },
             shape = RoundedCornerShape(10.dp)
         )
 
@@ -202,6 +203,7 @@ fun LoginWithMailAndPassword(
                     color = ButtonsLogin,
                     shape = RoundedCornerShape(10.dp)
                 ),
+            label = { Text("Password") },
             shape = RoundedCornerShape(10.dp),
             colors = OutlinedTextFieldDefaults.colors(
                 focusedTextColor = Color.White,
