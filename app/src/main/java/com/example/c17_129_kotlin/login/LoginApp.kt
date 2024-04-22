@@ -58,6 +58,7 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
 import com.example.c17_129_kotlin.R
 import com.example.c17_129_kotlin.ui.theme.ButtonsLogin
 import com.example.c17_129_kotlin.ui.theme.ColorBlue
@@ -72,9 +73,10 @@ import com.google.firebase.auth.GoogleAuthProvider
 import kotlinx.coroutines.launch
 
 @Composable
-fun LogScreen(auth: AuthManager){
+fun LogScreen(navController: NavHostController){
 
     val context = LocalContext.current
+    val auth: AuthManager = AuthManager(context)
 
     Card (
         modifier = Modifier
@@ -446,12 +448,12 @@ fun ButtonSingUp(){
     }
 }
 
-@Preview
+/*@Preview
 @Composable
 fun LogScreenPreview() {
     // Aquí puedes inicializar AuthManager con un contexto de prueba
     val authManager = AuthManager(context = LocalContext.current)
 
     // Llama a LogScreen y pasa la instancia de AuthManager
-    LogScreen(auth = authManager)
-}
+    LogScreen()
+}*/
