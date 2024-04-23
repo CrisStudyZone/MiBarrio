@@ -116,8 +116,8 @@ fun MainMenu(
         CustomMenu(colorGradient1 = colorResource(id = R.color.Green), colorGradient2 = Color.White, imageResId = R.drawable.imagen_pequena_farmacia, text = "Farmacias de Turno", onClick = {navController.navigate(HomeScreens.PharmacyScreens.route)})
         CustomMenu(colorGradient1 = Color.White, colorGradient2 = colorResource(id = R.color.Red), imageResId = R.drawable.imagen_pequena_bomberos, text = "Bomberos", onClick = {navController.navigate(HomeScreens.FiremanScreens.route)})
         CustomMenu(colorGradient1 = colorResource(id = R.color.BlueLigth), colorGradient2 = Color.White, imageResId = R.drawable.imagen_pequena_policia, text = "Policia", onClick = {navController.navigate(HomeScreens.PoliceScreens.route)})
-        CustomMenu(colorGradient1 = Color.White, colorGradient2 = colorResource(id = R.color.Orange), imageResId = R.drawable.imagen_pequena_obras_necesarias, text = "Obras Necesarias", onClick = {})
-        CustomMenu(colorGradient1 = colorResource(id = R.color.Blue),colorGradient2 = Color.White, imageResId = R.drawable.imagen_pequena_reparaciones_necesarias, text = "Reparaciones Necesarias", onClick = {})
+        CustomMenu(colorGradient1 = Color.White, colorGradient2 = colorResource(id = R.color.Orange), imageResId = R.drawable.imagen_pequena_obras_necesarias, text = "Obras Necesarias", onClick = {navController.navigate(HomeScreens.NecessaryWorksScreen.route)})
+        CustomMenu(colorGradient1 = colorResource(id = R.color.Blue),colorGradient2 = Color.White, imageResId = R.drawable.imagen_pequena_reparaciones_necesarias, text = "Reparaciones Necesarias", onClick = {navController.navigate(HomeScreens.ReportScreens.route)})
 
     }
 }

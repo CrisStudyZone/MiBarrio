@@ -10,6 +10,7 @@ import com.example.c17_129_kotlin.login.LogScreen
 import com.example.c17_129_kotlin.necessaryWorks.NecesssaryWorksScreen
 import com.example.c17_129_kotlin.pharmacy.PharmacyScreen
 import com.example.c17_129_kotlin.police.PoliceScreen
+import com.example.c17_129_kotlin.reportScreen.ReporteScreen
 
 @Composable
 fun HomeNavigation() {
@@ -35,6 +36,9 @@ fun HomeNavigation() {
         }
         composable(route = HomeScreens.NecessaryWorksScreen.route){
             NecesssaryWorksScreen()
+        }
+        composable(route = HomeScreens.ReportScreens.route){
+            ReporteScreen()
         }
     }
 }

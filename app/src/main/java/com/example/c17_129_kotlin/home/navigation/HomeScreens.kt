@@ -22,4 +22,7 @@ sealed class HomeScreens(
     object NecessaryWorksScreen : HomeScreens(
         route = "NecessaryWorks_screen"
     )
+    object ReportScreens : HomeScreens(
+        route = "report_Screen"
+    )
 }
