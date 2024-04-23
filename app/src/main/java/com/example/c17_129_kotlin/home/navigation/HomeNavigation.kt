@@ -4,6 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.c17_129_kotlin.camera.CameraScreen
 import com.example.c17_129_kotlin.fireman.ImageDisplayMain
 import com.example.c17_129_kotlin.home.ui.ScreenMainMenu
 import com.example.c17_129_kotlin.login.LogScreen
@@ -38,7 +39,10 @@ fun HomeNavigation() {
             NecesssaryWorksScreen()
         }
         composable(route = HomeScreens.ReportScreens.route){
-            ReporteScreen()
+            ReporteScreen(navController = navController)
+        }
+        composable(route = HomeScreens.CameraScreen.route){
+            CameraScreen(navController = navController)
         }
     }
 }

@@ -25,4 +25,7 @@ sealed class HomeScreens(
     object ReportScreens : HomeScreens(
         route = "report_Screen"
     )
+    object CameraScreen : HomeScreens(
+        route = "camera_Screen"
+    )
 }

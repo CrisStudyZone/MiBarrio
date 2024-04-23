@@ -102,5 +102,8 @@ dependencies {
     implementation(libs.androidx.navigation.compose)
     implementation (libs.androidx.navigation.compose.v253)
 
+    // Permissions
+    implementation (libs.accompanist.permissions)
+
 
 }
