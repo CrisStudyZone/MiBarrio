@@ -41,33 +41,39 @@ val bomberosEjemplo = listOf(
 @Preview
 @Composable
 fun ImageDisplayMain() {
-    Card(
-        modifier = Modifier
-            .fillMaxWidth()
+    Surface(
+        //modifier = Modifier.padding(16.dp).fillMaxSize(),
+        color = Color.LightGray
     ) {
-        Column(
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally,
+        Card(
             modifier = Modifier
                 .fillMaxWidth()
         ) {
-            Image(
-                painter = painterResource(id = R.drawable.imagen_estacion_de_bomberos),
-                contentDescription = null,
+            Column(
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .aspectRatio(1.5f),
-                contentScale = ContentScale.Crop
-            )
-            //Aqui agregar la parte del mapa de Google Maps
-            Text(
-                text = "Teléfonos",
-                style = MaterialTheme.typography.headlineSmall
-            )
-            VerBomberos()
-        }
+            ) {
+                Image(
+                    painter = painterResource(id = R.drawable.imagen_estacion_de_bomberos),
+                    contentDescription = null,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .aspectRatio(1.5f),
+                    contentScale = ContentScale.Crop
+                )
+                //Aqui agregar la parte del mapa de Google Maps
+                Text(
+                    text = "Teléfonos",
+                    style = MaterialTheme.typography.headlineSmall
+                )
+                VerBomberos()
+            }
 
+        }
     }
+
 
 
     //Implementar funcion de Google Maps

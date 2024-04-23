@@ -19,4 +19,7 @@ sealed class HomeScreens(
     object PoliceScreens : HomeScreens(
         route = "police_screen"
     )
+    object NecessaryWorksScreen : HomeScreens(
+        route = "NecessaryWorks_screen"
+    )
 }
