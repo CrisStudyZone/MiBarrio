@@ -449,12 +449,18 @@ fun ButtonSingUp(){
     }
 }
 
-@Preview
+/*@Preview
 @Composable
 fun LogScreenPreview() {
+    // Aquí puedes inicializar AuthManager con un contexto de prueba
+    val authManager = AuthManager(context = LocalContext.current)
+
+    // Llama a LogScreen y pasa la instancia de AuthManager
+    LogScreen()
+}
 //    // Aquí puedes inicializar AuthManager con un contexto de prueba
 //    val authManager = AuthManager(context = LocalContext.current)
 //
 //    // Llama a LogScreen y pasa la instancia de AuthManager
 //    LogScreen(auth = authManager)
-}
+}*/
