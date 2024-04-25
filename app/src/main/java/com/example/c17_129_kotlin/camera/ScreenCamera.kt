@@ -33,6 +33,9 @@ import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
 import androidx.navigation.NavHostController
 import coil.compose.rememberAsyncImagePainter
+import com.example.c17_129_kotlin.home.data.PhotoData
+import com.example.c17_129_kotlin.utils.SavePhotoUri.cargarFotoData
+import com.example.c17_129_kotlin.utils.SavePhotoUri.guardarFotoData
 import kotlinx.coroutines.launch
 
 @Composable
@@ -47,6 +50,7 @@ fun CameraScreen(
     val fotoUri = remember { mutableStateOf<Uri?>(null) }
     var buttonsVisible by remember { mutableStateOf(true) }
     val lifecycle = LocalLifecycleOwner.current
+    val fotoData = remember { mutableStateOf(cargarFotoData(context)) }
 
     Scaffold(
         modifier = Modifier.fillMaxSize(),
@@ -74,6 +78,8 @@ fun CameraScreen(
                                 executor,
                                 onSuccess = { uri ->
                                     fotoUri.value = uri
+                                    fotoData.value = PhotoData(uri)
+                                    guardarFotoData(context, fotoData.value)
                                 }
                             )
                         }

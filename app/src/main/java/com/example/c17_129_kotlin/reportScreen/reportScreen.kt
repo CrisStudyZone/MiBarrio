@@ -1,6 +1,7 @@
 package com.example.c17_129_kotlin.reportScreen
 
 import android.Manifest
+import android.content.Context
 import android.net.Uri
 import androidx.camera.view.LifecycleCameraController
 import androidx.compose.foundation.Image
@@ -52,11 +53,13 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.content.ContextCompat
 import androidx.navigation.NavHostController
+import coil.compose.rememberAsyncImagePainter
 import coil.compose.rememberImagePainter
 import com.example.c17_129_kotlin.R
 import com.example.c17_129_kotlin.camera.CamaraCompose
 import com.example.c17_129_kotlin.camera.takePicture
 import com.example.c17_129_kotlin.home.navigation.HomeScreens
+import com.example.c17_129_kotlin.utils.SavePhotoUri.cargarFotoData
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.isGranted
 import com.google.accompanist.permissions.rememberPermissionState
@@ -72,6 +75,7 @@ fun ReporteScreen(
     LaunchedEffect(Unit){
         permissionState.launchPermissionRequest()
     }
+    val context = LocalContext.current
 
     Column(
         modifier = Modifier
@@ -113,19 +117,20 @@ fun ReporteScreen(
 
         Spacer(modifier = Modifier.height(20.dp))
 
-        DataReport(onClick = {navController.navigate(HomeScreens.CameraScreen.route)})
+        DataReport(onClick = {navController.navigate(HomeScreens.CameraScreen.route)}, context = context)
     }
 }
 
 @Composable
 fun DataReport(
-    onClick: () -> Unit
+    onClick: () -> Unit,
+    context: Context
 ) {
     val reportData = listOf(
         ReportElement(title = "¿Donde se ubica el problema", hint = { OpenMap() }),
         ReportElement(title = "Referencias de la ubicación", hint = { OpenTextUbication() }),
         ReportElement(title = "Descripcion del reporte", hint = { OpenTextDescrption() }),
-        ReportElement(title = "Capturar imagen ddel reporte", hint = { OpenCamera(onClick = {onClick()}) })
+        ReportElement(title = "Capturar imagen ddel reporte", hint = { OpenCamera(onClick = {onClick()}, context = context) })
     )
 
     LazyColumn {
@@ -189,9 +194,12 @@ fun OpenTextDescrption() {
 
 @Composable
 fun OpenCamera(
-    onClick : () -> Unit
+    context: Context,
+    onClick: () -> Unit
 ) {
-    Column (
+    val fotoData = remember { mutableStateOf(cargarFotoData(context)) }
+
+    Column(
         verticalArrangement = Arrangement.Center,
         modifier = Modifier
             .size(width = 333.dp, height = 119.dp)
@@ -200,10 +208,9 @@ fun OpenCamera(
                 shape = RoundedCornerShape(10.dp)
             )
             .padding(start = 14.dp)
-            .clickable { /*TODO: Aqui hay que llamar a la camara*/ }
-    )
-    {
-        Box (
+            .clickable { onClick() }
+    ) {
+        Box(
             modifier = Modifier
                 .size(width = 88.dp, height = 92.dp)
                 .background(
@@ -213,18 +220,28 @@ fun OpenCamera(
                 .clickable { onClick() },
             contentAlignment = Alignment.Center
         ) {
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.Center
-            ) {
-                Icon(
-                    painter = painterResource(id = R.drawable.baseline_add_24),
+            if (fotoData.value.fotoUri != null) {
+                Image(
+                    painter = rememberAsyncImagePainter(fotoData.value.fotoUri!!),
                     contentDescription = null,
+                    modifier = Modifier.fillMaxSize()
+                )
+            } else {
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.Center
+                ) {
+                    Icon(
+                        painter = painterResource(id = R.drawable.baseline_add_24),
+                        contentDescription = null
                     )
-                Spacer(modifier = Modifier.height(5.dp))
-                Icon(
-                    painter = painterResource(id = R.drawable.baseline_photo_camera_24),
-                    contentDescription = null)
+                    Spacer(modifier = Modifier.height(5.dp))
+                    Icon(
+                        painter = painterResource(id = R.drawable.baseline_photo_camera_24),
+                        contentDescription = null,
+                        modifier = Modifier.size(30.dp, 30.dp)
+                    )
+                }
             }
         }
     }
