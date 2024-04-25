@@ -22,9 +22,11 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -45,6 +47,7 @@ fun CameraScreen(
         LifecycleCameraController(context)
     }
     val fotoUri = remember { mutableStateOf<Uri?>(null) }
+    var buttonsVisible by remember { mutableStateOf(true) }
     val lifecycle = LocalLifecycleOwner.current
 
     Scaffold(
@@ -54,7 +57,7 @@ fun CameraScreen(
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.SpaceAround,
                 modifier = Modifier.fillMaxWidth()
-            ) {
+            ) { if(buttonsVisible){
                 Button(
                     onClick = {
                         navController.popBackStack()
@@ -76,11 +79,13 @@ fun CameraScreen(
                                 }
                             )
                         }
+                        buttonsVisible = false
                     }
                 ) {
                     Text(text = "¡Cámara!")
                 }
             }
+        }
         }
     ){
         if (fotoUri.value != null) {
@@ -107,6 +112,7 @@ fun CameraScreen(
                     FloatingActionButton(
                         onClick = {
                             fotoUri.value = null
+                            buttonsVisible = true
                         }
                     ) {
                         Icon(Icons.Default.Close, contentDescription = "Cancelar")
