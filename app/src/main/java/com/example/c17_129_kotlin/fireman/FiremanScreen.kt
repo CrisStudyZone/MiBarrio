@@ -18,6 +18,7 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -32,9 +33,11 @@ import com.example.c17_129_kotlin.fireman.data.Bombero
 
 // Datos de ejemplo para demostración
 val bomberosEjemplo = listOf(
-    Bombero(0, "Juan Pérez", "123-456-7890", "Calle Principal 123"),
-    Bombero(1, "María Gómez", "987-654-3210", "Avenida Elm 456"),
-    Bombero(2, "María Gómez", "987-654-3210", "Avenida Elm 456")
+    Bombero(0, "Estacion de bomberos", "02374842222", "Calle Principal 123"),
+    Bombero(1, "Central Bomberos", "100", "Avenida Elm 456"),
+    Bombero(2, "Defenza Civil", "103", "Avenida Elm 456"),
+    Bombero(3, "Emergencias Nauticas", "106", "Avenida Elm 456"),
+    Bombero(4, "Emergencia Ambiental", "105", "Avenida Elm 456")
 )
 
 //Aqui van las funciones en orden para mostrarlas en cascada
