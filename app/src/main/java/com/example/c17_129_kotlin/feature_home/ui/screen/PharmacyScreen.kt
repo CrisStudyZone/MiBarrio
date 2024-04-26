@@ -1,4 +1,4 @@
-package com.example.c17_129_kotlin.pharmacy
+package com.example.c17_129_kotlin.feature_home.ui.screen
 
 import android.content.ActivityNotFoundException
 import android.content.Context
@@ -36,7 +36,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.c17_129_kotlin.R
-import com.example.c17_129_kotlin.pharmacy.data.PharmacyData
+import com.example.c17_129_kotlin.feature_home.data.PharmacyData
 
 
 @Composable

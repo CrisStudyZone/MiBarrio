@@ -1,4 +1,4 @@
-package com.example.c17_129_kotlin.home.navigation
+package com.example.c17_129_kotlin.feature_home.ui.navigation
 
 sealed class HomeScreens(
     val route : String

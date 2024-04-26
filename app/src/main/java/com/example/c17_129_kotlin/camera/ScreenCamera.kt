@@ -33,7 +33,7 @@ import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
 import androidx.navigation.NavHostController
 import coil.compose.rememberAsyncImagePainter
-import com.example.c17_129_kotlin.home.data.PhotoData
+import com.example.c17_129_kotlin.feature_home.data.PhotoData
 import com.example.c17_129_kotlin.utils.SavePhotoUri.cargarFotoData
 import com.example.c17_129_kotlin.utils.SavePhotoUri.guardarFotoData
 import kotlinx.coroutines.launch

@@ -1,4 +1,4 @@
-package com.example.c17_129_kotlin.police
+package com.example.c17_129_kotlin.feature_home.ui.screen
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -23,7 +23,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.c17_129_kotlin.R
-import com.example.c17_129_kotlin.police.data.InformationPolice
+import com.example.c17_129_kotlin.feature_home.data.InformationPolice
 import com.example.c17_129_kotlin.ui.theme.IcPhoneBackground
 
 @Composable

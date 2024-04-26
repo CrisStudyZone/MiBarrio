@@ -1,4 +1,4 @@
-package com.example.c17_129_kotlin.pharmacy.data
+package com.example.c17_129_kotlin.feature_home.data
 
 data class PharmacyData(
     val pharmacyName: String,

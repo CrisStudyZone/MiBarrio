@@ -7,7 +7,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import com.example.c17_129_kotlin.home.navigation.HomeNavigation
+import com.example.c17_129_kotlin.feature_home.ui.navigation.HomeNavigation
 import com.example.c17_129_kotlin.utils.AuthManager
 import com.google.firebase.Firebase
 import com.google.firebase.analytics.FirebaseAnalytics

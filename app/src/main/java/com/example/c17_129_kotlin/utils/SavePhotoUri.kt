@@ -3,7 +3,7 @@ package com.example.c17_129_kotlin.utils
 import android.content.Context
 import android.net.Uri
 import android.preference.PreferenceManager
-import com.example.c17_129_kotlin.home.data.PhotoData
+import com.example.c17_129_kotlin.feature_home.data.PhotoData
 
 object SavePhotoUri {
 

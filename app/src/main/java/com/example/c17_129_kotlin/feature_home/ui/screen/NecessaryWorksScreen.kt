@@ -1,4 +1,4 @@
-package com.example.c17_129_kotlin.necessaryWorks
+package com.example.c17_129_kotlin.feature_home.ui.screen
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
@@ -10,6 +10,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import com.example.c17_129_kotlin.R
+import com.example.c17_129_kotlin.feature_home.data.ImageItemNecessaryWork
 
 
 val imageItemList = listOf(

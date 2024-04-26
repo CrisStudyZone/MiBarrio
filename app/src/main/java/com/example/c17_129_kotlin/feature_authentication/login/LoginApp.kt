@@ -1,4 +1,4 @@
-package com.example.c17_129_kotlin.login
+package com.example.c17_129_kotlin.feature_authentication.login
 
 import android.content.Context
 import android.util.Log
@@ -52,12 +52,11 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.example.c17_129_kotlin.R
-import com.example.c17_129_kotlin.home.navigation.HomeScreens
+import com.example.c17_129_kotlin.feature_home.ui.navigation.HomeScreens
 import com.example.c17_129_kotlin.ui.theme.ButtonsLogin
 import com.example.c17_129_kotlin.ui.theme.ColorBlue
 import com.example.c17_129_kotlin.ui.theme.ColorBlueGreen
@@ -104,7 +103,7 @@ fun LogScreen(
                 .fillMaxWidth(),
             horizontalArrangement = Arrangement.Center
         ){
-            CustomButton(image = R.drawable.icono_google, text = "Login With", onClick = { LoginWithGoogle<GoogleSignInAccount>(context = context, AuthManager(context = context))})
+            CustomButton(image = R.drawable.icono_google, text = "Login With", onClick = { LoginWithGoogle<GoogleSignInAccount>(context = context, AuthManager(context = context)) })
             Spacer(modifier = Modifier.padding(20.dp))
             CustomButton(image = R.drawable.icono_facebook, text = "Login With", onClick = { LoginWithFacebook() })
         }

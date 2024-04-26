@@ -1,4 +1,4 @@
-package com.example.c17_129_kotlin.home.navigation
+package com.example.c17_129_kotlin.feature_home.ui.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
@@ -6,12 +6,12 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.c17_129_kotlin.camera.CameraScreen
 import com.example.c17_129_kotlin.fireman.ImageDisplayMain
-import com.example.c17_129_kotlin.home.ui.ScreenMainMenu
-import com.example.c17_129_kotlin.login.LogScreen
-import com.example.c17_129_kotlin.necessaryWorks.NecesssaryWorksScreen
-import com.example.c17_129_kotlin.pharmacy.PharmacyScreen
-import com.example.c17_129_kotlin.police.PoliceScreen
-import com.example.c17_129_kotlin.reportScreen.ReporteScreen
+import com.example.c17_129_kotlin.feature_home.ui.screen.ScreenMainMenu
+import com.example.c17_129_kotlin.feature_authentication.login.LogScreen
+import com.example.c17_129_kotlin.feature_home.ui.screen.NecesssaryWorksScreen
+import com.example.c17_129_kotlin.feature_home.ui.screen.PharmacyScreen
+import com.example.c17_129_kotlin.feature_home.ui.screen.PoliceScreen
+import com.example.c17_129_kotlin.feature_home.ui.screen.ReporteScreen
 
 @Composable
 fun HomeNavigation() {

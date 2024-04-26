@@ -29,7 +29,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.c17_129_kotlin.R
-import com.example.c17_129_kotlin.fireman.data.Bombero
+import com.example.c17_129_kotlin.feature_home.data.Bombero
 
 // Datos de ejemplo para demostración
 val bomberosEjemplo = listOf(
